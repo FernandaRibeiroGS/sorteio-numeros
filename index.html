@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorteio Público — Prefeitura de Santa Rosa de Goiás</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <img src="LOGO-2025-2028-2.png" alt="Logo Prefeitura" class="brasao-logo" />
+      <div class="header-text">
+        <div class="header-municipio">Prefeitura Municipal de Santa Rosa de Goiás</div>
+        <div class="header-estado">Estado de Goiás &nbsp;·&nbsp; 🎲 Sistema de Sorteio Público</div>
+        <div class="header-slogan">Um novo tempo chegou!</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">⚙️</span>
+          <span>Configuração</span>
+        </div>
+        <div class="config">
+          <div class="input-group">
+            <label>Número mínimo</label>
+            <input type="number" id="min" value="1" min="0" />
+          </div>
+          <div class="divider-arrow">→</div>
+          <div class="input-group">
+            <label>Número máximo</label>
+            <input type="number" id="max" value="100" min="1" />
+          </div>
+        </div>
+        <div class="actions">
+          <button id="btnSortear">
+            <span>🎲</span> Realizar Sorteio
+          </button>
+          <button id="btnReset" class="secondary">
+            <span>🔄</span> Reiniciar
+          </button>
+        </div>
+      </div>
+
+      <div class="card resultado-card">
+        <div class="card-header">
+          <span class="card-icon">🏆</span>
+          <span>Resultado</span>
+        </div>
+        <div class="resultado-wrap">
+          <div id="resultado" class="resultado hidden"></div>
+          <div id="semSorteio" class="placeholder">
+            <div class="placeholder-icon">🎯</div>
+            <p>Aguardando sorteio</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card historico-card">
+      <div class="card-header">
+        <div class="card-header-left">
+          <span class="card-icon">📋</span>
+          <span>Histórico de Sorteios</span>
+        </div>
+        <span id="contador" class="pill" style="display:none"></span>
+      </div>
+      <div id="historico" class="historico"></div>
+      <div id="semHistorico" class="placeholder small">
+        <p>Nenhum número sorteado ainda</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>🏛️ Prefeitura Municipal de Santa Rosa de Goiás</span>
+      <span class="footer-sep">·</span>
+      <span>Sistema de Sorteio Público</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
