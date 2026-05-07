@@ -3,108 +3,411 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sorteio de Números</title>
+  <title>Sorteio & Bingo</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+
+    body {
+      min-height: 100vh;
+      height: auto;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      background: #0a0818;
+    }
+
+    /* ── FUNDO ── */
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-glow::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(91,79,245,0.35) 0%, transparent 70%);
+      top: -200px; left: -200px;
+    }
+    .bg-glow::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,111,247,0.2) 0%, transparent 70%);
+      bottom: -100px; right: -100px;
+    }
+
+    /* ── DOTS GRID ── */
+    .bg-dots {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* ── WRAPPER ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 60px 24px;
+      gap: 0;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(10,8,24,0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-brand-icon {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--accent), #7c6ff7);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .nav-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+      margin-bottom: 64px;
+      margin-top: 40px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(91,79,245,0.15);
+      border: 1px solid rgba(91,79,245,0.35);
+      color: #a89ff8;
+      border-radius: 99px;
+      padding: 6px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-pill-dot {
+      width: 6px; height: 6px;
+      background: #7c6ff7;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -2.5px;
+      line-height: 1.05;
+    }
+
+    .hero h1 .grad {
+      background: linear-gradient(135deg, #a89ff8 0%, #7c6ff7 40%, #5b4ff5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.45);
+      max-width: 420px;
+      line-height: 1.6;
+    }
+
+    /* ── CARDS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+      max-width: 780px;
+    }
+
+    .card-home {
+      position: relative;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 24px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-decoration: none;
+      overflow: hidden;
+      transition: transform 0.22s, border-color 0.22s, background 0.22s;
+      backdrop-filter: blur(8px);
+    }
+
+    .card-home::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(91,79,245,0.12), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.22s;
+    }
+
+    .card-home:hover {
+      transform: translateY(-6px);
+      border-color: rgba(91,79,245,0.5);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .card-home:hover::after { opacity: 1; }
+
+    /* glow no hover */
+    .card-home::before {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(91,79,245,0.3), transparent 70%);
+      top: -60px; right: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .card-home:hover::before { opacity: 1; }
+
+    .card-home-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-home-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, rgba(91,79,245,0.25), rgba(124,111,247,0.15));
+      border: 1px solid rgba(91,79,245,0.3);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-home-arrow {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-home:hover .card-home-arrow {
+      background: rgba(91,79,245,0.3);
+      border-color: rgba(91,79,245,0.5);
+      color: #fff;
+      transform: translate(2px, -2px);
+    }
+
+    .card-home-body { position: relative; z-index: 1; }
+
+    .card-home-label {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.4px;
+      margin-bottom: 6px;
+    }
+
+    .card-home-desc {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.55;
+    }
+
+    .card-home-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tag {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 99px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 56px;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      font-weight: 500;
+    }
+
+    .stat-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.08);
+      align-self: stretch;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 48px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.18);
+      text-align: center;
+    }
+
+    /* ── RESPONSIVO ── */
+    @media (max-width: 640px) {
+      .nav { padding: 16px 20px; }
+      .hero h1 { font-size: 2.4rem; letter-spacing: -1.5px; }
+      .cards { grid-template-columns: 1fr; max-width: 400px; }
+      .stats { gap: 20px; }
+    }
+
+  </style>
 </head>
 <body>
 
-  <div class="layout">
+  <div class="bg-glow"></div>
+  <div class="bg-dots"></div>
 
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <span class="logo-icon">🎲</span>
-        <span class="logo-text">Sorteio</span>
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-brand-icon">🎲</div>
+      SorteioApp
+    </div>
+    <div class="nav-tag">v1.0</div>
+  </nav>
+
+  <div class="page">
+
+    <div class="hero">
+      <div class="hero-pill">
+        <div class="hero-pill-dot"></div>
+        Plataforma de Sorteios Online
       </div>
-      <nav class="sidebar-nav">
-        <a class="nav-item active">
-          <span>🎯</span> Novo Sorteio
-        </a>
-        <a class="nav-item">
-          <span>📋</span> Histórico
-        </a>
-      </nav>
-    </aside>
+      <h1>Sorteios <span class="grad">simples</span><br>e transparentes</h1>
+      <p class="hero-sub">Escolha o modo abaixo e realize sorteios sem repetição, de forma rápida e confiável.</p>
+    </div>
 
-    <div class="content">
+    <div class="cards" style="grid-template-columns: 1fr; max-width: 420px;">
 
-      <header class="topbar">
-        <div class="topbar-title">
-          <h1>Novo Sorteio</h1>
-          <p>Configure o intervalo e realize o sorteio</p>
+      <a href="sorteio.html" class="card-home">
+        <div class="card-home-head">
+          <div class="card-home-icon">🎲</div>
+          <div class="card-home-arrow">↗</div>
         </div>
-        <button id="btnReset" class="btn-outline">🔄 Reiniciar</button>
-      </header>
-
-      <main class="main">
-
-        <div class="col-left">
-
-          <div class="card">
-            <div class="card-title">⚙️ Configuração</div>
-            <div class="field">
-              <label>Número mínimo</label>
-              <input type="number" id="min" value="1" min="0" />
-            </div>
-            <div class="field">
-              <label>Número máximo</label>
-              <input type="number" id="max" value="100" min="1" />
-            </div>
-            <button id="btnSortear">🎲 Realizar Sorteio</button>
-          </div>
-
-          <div class="card info-card">
-            <div class="card-title">📊 Informações</div>
-            <div class="info-row">
-              <span>Total no intervalo</span>
-              <strong id="infoTotal">100</strong>
-            </div>
-            <div class="info-row">
-              <span>Já sorteados</span>
-              <strong id="infoSorteados">0</strong>
-            </div>
-            <div class="info-row">
-              <span>Disponíveis</span>
-              <strong id="infoDisponiveis">100</strong>
-            </div>
-            <div class="progress-wrap">
-              <div class="progress-bar">
-                <div id="progressFill" class="progress-fill" style="width:0%"></div>
-              </div>
-              <span id="progressPct" class="progress-pct">0%</span>
-            </div>
-          </div>
-
+        <div class="card-home-body">
+          <div class="card-home-label">Sorteio de Números</div>
+          <div class="card-home-desc">Defina o intervalo mínimo e máximo e sorteie números sem repetição.</div>
         </div>
-
-        <div class="col-right">
-
-          <div class="card resultado-card">
-            <div class="card-title">🏆 Resultado</div>
-            <div class="resultado-wrap">
-              <div id="resultado" class="resultado hidden"></div>
-              <div id="semSorteio" class="empty-state">
-                <div class="empty-icon">🎯</div>
-                <p>Aguardando sorteio</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title-row">
-              <span class="card-title">📋 Histórico</span>
-              <span id="contador" class="badge" style="display:none"></span>
-            </div>
-            <div id="historico" class="historico"></div>
-            <div id="semHistorico" class="empty-small">Nenhum número sorteado ainda</div>
-          </div>
-
+        <div class="card-home-tags">
+          <span class="tag">Intervalo livre</span>
+          <span class="tag">Sem repetição</span>
+          <span class="tag">Histórico</span>
         </div>
-
-      </main>
+      </a>
 
     </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">Aleatório</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Repetições</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-value">Free</div>
+        <div class="stat-label">Gratuito</div>
+      </div>
+    </div>
+
+    <div class="footer">Nenhum dado é coletado · Funciona 100% no navegador</div>
+
   </div>
 
-  <script src="script.js"></script>
 </body>
 </html>

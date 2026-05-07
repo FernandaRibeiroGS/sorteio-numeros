@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorteio de Números</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-icon">🎲</span>
+        <span class="logo-text">SorteioApp</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item active"><span>🎲</span> Sorteio</a>
+        <a href="index.html" class="nav-item"><span>🏠</span> Início</a>
+      </nav>
+    </aside>
+
+    <div class="content">
+
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1>Sorteio de Números</h1>
+          <p>Configure o intervalo e realize o sorteio</p>
+        </div>
+        <button id="btnReset" class="btn-outline">🔄 Reiniciar</button>
+      </header>
+
+      <main class="main">
+
+        <div class="col-left">
+
+          <div class="card">
+            <div class="card-title">⚙️ Configuração</div>
+            <div class="field">
+              <label>Número mínimo</label>
+              <input type="number" id="min" value="1" min="0" />
+            </div>
+            <div class="field">
+              <label>Número máximo</label>
+              <input type="number" id="max" value="100" min="1" />
+            </div>
+            <button id="btnSortear">🎲 Realizar Sorteio</button>
+          </div>
+
+          <div class="card info-card">
+            <div class="card-title">📊 Informações</div>
+            <div class="info-row">
+              <span>Total no intervalo</span>
+              <strong id="infoTotal">100</strong>
+            </div>
+            <div class="info-row">
+              <span>Já sorteados</span>
+              <strong id="infoSorteados">0</strong>
+            </div>
+            <div class="info-row">
+              <span>Disponíveis</span>
+              <strong id="infoDisponiveis">100</strong>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-bar">
+                <div id="progressFill" class="progress-fill" style="width:0%"></div>
+              </div>
+              <span id="progressPct" class="progress-pct">0%</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-right">
+
+          <div class="card resultado-card">
+            <div class="card-title">🏆 Resultado</div>
+            <div class="resultado-wrap">
+              <div id="resultado" class="resultado hidden"></div>
+              <div id="semSorteio" class="empty-state">
+                <div class="empty-icon">🎯</div>
+                <p>Aguardando sorteio</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title-row">
+              <span class="card-title">📋 Histórico</span>
+              <span id="contador" class="badge" style="display:none"></span>
+            </div>
+            <div id="historico" class="historico"></div>
+            <div id="semHistorico" class="empty-small">Nenhum número sorteado ainda</div>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
