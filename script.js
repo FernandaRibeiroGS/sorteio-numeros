@@ -1,35 +1,48 @@
-const btnSortear  = document.getElementById('btnSortear');
-const btnReset    = document.getElementById('btnReset');
-const resultado   = document.getElementById('resultado');
-const historico   = document.getElementById('historico');
-const contador    = document.getElementById('contador');
-const inputMin    = document.getElementById('min');
-const inputMax    = document.getElementById('max');
-const semSorteio  = document.getElementById('semSorteio');
-const semHistorico = document.getElementById('semHistorico');
+const btnSortear     = document.getElementById('btnSortear');
+const btnReset       = document.getElementById('btnReset');
+const resultado      = document.getElementById('resultado');
+const historico      = document.getElementById('historico');
+const contador       = document.getElementById('contador');
+const inputMin       = document.getElementById('min');
+const inputMax       = document.getElementById('max');
+const semSorteio     = document.getElementById('semSorteio');
+const semHistorico   = document.getElementById('semHistorico');
+const infoTotal      = document.getElementById('infoTotal');
+const infoSorteados  = document.getElementById('infoSorteados');
+const infoDisponiveis = document.getElementById('infoDisponiveis');
+const progressFill   = document.getElementById('progressFill');
+const progressPct    = document.getElementById('progressPct');
 
 let sorteados = new Set();
 
-function totalDisponiveis() {
-  const min = parseInt(inputMin.value);
-  const max = parseInt(inputMax.value);
-  return max - min + 1 - sorteados.size;
-}
+function getMin() { return parseInt(inputMin.value); }
+function getMax() { return parseInt(inputMax.value); }
+function total()  { return getMax() - getMin() + 1; }
 
-function atualizarBotao() {
-  btnSortear.disabled = totalDisponiveis() <= 0;
+function atualizarInfo() {
+  const t = total();
+  const s = sorteados.size;
+  const d = t - s;
+  const pct = t > 0 ? Math.round((s / t) * 100) : 0;
+
+  infoTotal.textContent       = t > 0 ? t : '—';
+  infoSorteados.textContent   = s;
+  infoDisponiveis.textContent = d > 0 ? d : '0';
+  progressFill.style.width    = pct + '%';
+  progressPct.textContent     = pct + '%';
+  btnSortear.disabled         = d <= 0;
 }
 
 function sortear() {
-  const min = parseInt(inputMin.value);
-  const max = parseInt(inputMax.value);
+  const min = getMin();
+  const max = getMax();
 
   if (isNaN(min) || isNaN(max) || min > max) {
     alert('Intervalo inválido. Verifique os valores.');
     return;
   }
 
-  if (totalDisponiveis() <= 0) return;
+  if (total() - sorteados.size <= 0) return;
 
   let num;
   do {
@@ -51,13 +64,12 @@ function sortear() {
   badge.className = 'num-badge ultimo';
   badge.textContent = num;
   historico.prepend(badge);
-
   semHistorico.style.display = 'none';
 
   contador.textContent = sorteados.size;
   contador.style.display = 'inline';
 
-  atualizarBotao();
+  atualizarInfo();
 }
 
 function reiniciar() {
@@ -68,10 +80,12 @@ function reiniciar() {
   semHistorico.style.display = '';
   contador.textContent = '';
   contador.style.display = 'none';
-  btnSortear.disabled = false;
+  atualizarInfo();
 }
 
-btnSortear.addEventListener('click', sortear);
-btnReset.addEventListener('click', reiniciar);
 inputMin.addEventListener('change', reiniciar);
 inputMax.addEventListener('change', reiniciar);
+btnSortear.addEventListener('click', sortear);
+btnReset.addEventListener('click', reiniciar);
+
+atualizarInfo();

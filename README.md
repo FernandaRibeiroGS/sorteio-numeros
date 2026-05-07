@@ -1,15 +1,6 @@
-# 🎲 Sistema de Sorteio Público
-### Prefeitura Municipal de Santa Rosa de Goiás — Gestão 2025/2028
+# 🎲 Sistema de Sorteio de Números
 
-> *"Um novo tempo chegou!"*
-
-Sistema web institucional para realização de sorteios públicos de forma transparente e imparcial, desenvolvido com a identidade visual oficial da Prefeitura Municipal de Santa Rosa de Goiás.
-
----
-
-## 📋 Sobre o Projeto
-
-Este sistema permite sortear números dentro de um intervalo definido, garantindo que cada número seja sorteado apenas uma vez. Ideal para sorteios públicos, eventos institucionais e processos seletivos que exijam transparência.
+Sistema web para realização de sorteios de forma simples e transparente. Sorteia números dentro de um intervalo definido, garantindo que cada número seja sorteado apenas uma vez.
 
 ---
 
@@ -25,43 +16,25 @@ Este sistema permite sortear números dentro de um intervalo definido, garantind
 
 ---
 
-## 🎨 Identidade Visual
-
-O sistema segue a paleta de cores oficial da Prefeitura Municipal de Santa Rosa de Goiás:
-
-| Cor | Hex | Uso |
-|-----|-----|-----|
-| Azul Marinho | `#003366` | Header, footer, textos principais |
-| Verde Vibrante | `#66CC00` | Botões, destaques, bordas |
-| Amarelo Ouro | `#FFD700` | Detalhes institucionais |
-| Branco | `#FFFFFF` | Tipografia sobre fundos escuros |
-
-**Tipografia:**
-- `Inter` — dados, labels e textos técnicos
-- `Pacifico` — slogan institucional
-
----
-
 ## 🗂️ Estrutura do Projeto
 
 ```
 sorteio-numeros/
-├── index.html           # Estrutura da página
-├── style.css            # Estilos e identidade visual
-├── script.js            # Lógica do sorteio
-├── LOGO-2025-2028-2.png # Logo oficial da prefeitura
-└── README.md            # Este arquivo
+├── index.html  # Estrutura da página
+├── style.css   # Estilos e layout
+├── script.js   # Lógica do sorteio
+└── README.md   # Este arquivo
 ```
 
 ---
 
 ## 🚀 Como Executar
 
-Por ser um projeto puramente front-end (HTML, CSS e JavaScript), não requer instalação de dependências ou servidor.
+Por ser um projeto puramente front-end, não requer instalação de dependências ou servidor.
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/sorteio-numeros.git
+   git clone https://github.com/FernandaRibeiroGS/sorteio-numeros.git
    ```
 
 2. Acesse a pasta:
@@ -76,13 +49,6 @@ Por ser um projeto puramente front-end (HTML, CSS e JavaScript), não requer ins
 ## 🛠️ Tecnologias Utilizadas
 
 - **HTML5** — estrutura semântica
-- **CSS3** — layout, animações e identidade visual (variáveis CSS, Grid, Flexbox)
+- **CSS3** — layout, animações e variáveis CSS (Grid, Flexbox)
 - **JavaScript (ES6+)** — lógica de sorteio com `Set` para controle de repetições
-- **Google Fonts** — Inter e Pacifico
-
----
-
-## 📄 Licença
-
-Este projeto é de uso institucional da **Prefeitura Municipal de Santa Rosa de Goiás**.  
-Todos os direitos reservados © 2025/2028.
+- **Google Fonts** — Inter

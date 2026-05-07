@@ -3,92 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sorteio Público — Prefeitura de Santa Rosa de Goiás</title>
+  <title>Sorteio de Números</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <header class="header">
-    <div class="header-inner">
-      <img src="LOGO-2025-2028-2.png" alt="Logo Prefeitura" class="brasao-logo" />
-      <div class="header-text">
-        <div class="header-municipio">Prefeitura Municipal de Santa Rosa de Goiás</div>
-        <div class="header-estado">Estado de Goiás &nbsp;·&nbsp; 🎲 Sistema de Sorteio Público</div>
-        <div class="header-slogan">Um novo tempo chegou!</div>
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-icon">🎲</span>
+        <span class="logo-text">Sorteio</span>
       </div>
-    </div>
-  </header>
+      <nav class="sidebar-nav">
+        <a class="nav-item active">
+          <span>🎯</span> Novo Sorteio
+        </a>
+        <a class="nav-item">
+          <span>📋</span> Histórico
+        </a>
+      </nav>
+    </aside>
 
-  <main class="main">
+    <div class="content">
 
-    <div class="grid">
-
-      <div class="card">
-        <div class="card-header">
-          <span class="card-icon">⚙️</span>
-          <span>Configuração</span>
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1>Novo Sorteio</h1>
+          <p>Configure o intervalo e realize o sorteio</p>
         </div>
-        <div class="config">
-          <div class="input-group">
-            <label>Número mínimo</label>
-            <input type="number" id="min" value="1" min="0" />
+        <button id="btnReset" class="btn-outline">🔄 Reiniciar</button>
+      </header>
+
+      <main class="main">
+
+        <div class="col-left">
+
+          <div class="card">
+            <div class="card-title">⚙️ Configuração</div>
+            <div class="field">
+              <label>Número mínimo</label>
+              <input type="number" id="min" value="1" min="0" />
+            </div>
+            <div class="field">
+              <label>Número máximo</label>
+              <input type="number" id="max" value="100" min="1" />
+            </div>
+            <button id="btnSortear">🎲 Realizar Sorteio</button>
           </div>
-          <div class="divider-arrow">→</div>
-          <div class="input-group">
-            <label>Número máximo</label>
-            <input type="number" id="max" value="100" min="1" />
+
+          <div class="card info-card">
+            <div class="card-title">📊 Informações</div>
+            <div class="info-row">
+              <span>Total no intervalo</span>
+              <strong id="infoTotal">100</strong>
+            </div>
+            <div class="info-row">
+              <span>Já sorteados</span>
+              <strong id="infoSorteados">0</strong>
+            </div>
+            <div class="info-row">
+              <span>Disponíveis</span>
+              <strong id="infoDisponiveis">100</strong>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-bar">
+                <div id="progressFill" class="progress-fill" style="width:0%"></div>
+              </div>
+              <span id="progressPct" class="progress-pct">0%</span>
+            </div>
           </div>
-        </div>
-        <div class="actions">
-          <button id="btnSortear">
-            <span>🎲</span> Realizar Sorteio
-          </button>
-          <button id="btnReset" class="secondary">
-            <span>🔄</span> Reiniciar
-          </button>
-        </div>
-      </div>
 
-      <div class="card resultado-card">
-        <div class="card-header">
-          <span class="card-icon">🏆</span>
-          <span>Resultado</span>
         </div>
-        <div class="resultado-wrap">
-          <div id="resultado" class="resultado hidden"></div>
-          <div id="semSorteio" class="placeholder">
-            <div class="placeholder-icon">🎯</div>
-            <p>Aguardando sorteio</p>
+
+        <div class="col-right">
+
+          <div class="card resultado-card">
+            <div class="card-title">🏆 Resultado</div>
+            <div class="resultado-wrap">
+              <div id="resultado" class="resultado hidden"></div>
+              <div id="semSorteio" class="empty-state">
+                <div class="empty-icon">🎯</div>
+                <p>Aguardando sorteio</p>
+              </div>
+            </div>
           </div>
+
+          <div class="card">
+            <div class="card-title-row">
+              <span class="card-title">📋 Histórico</span>
+              <span id="contador" class="badge" style="display:none"></span>
+            </div>
+            <div id="historico" class="historico"></div>
+            <div id="semHistorico" class="empty-small">Nenhum número sorteado ainda</div>
+          </div>
+
         </div>
-      </div>
+
+      </main>
 
     </div>
-
-    <div class="card historico-card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <span class="card-icon">📋</span>
-          <span>Histórico de Sorteios</span>
-        </div>
-        <span id="contador" class="pill" style="display:none"></span>
-      </div>
-      <div id="historico" class="historico"></div>
-      <div id="semHistorico" class="placeholder small">
-        <p>Nenhum número sorteado ainda</p>
-      </div>
-    </div>
-
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <span>🏛️ Prefeitura Municipal de Santa Rosa de Goiás</span>
-      <span class="footer-sep">·</span>
-      <span>Sistema de Sorteio Público</span>
-    </div>
-  </footer>
+  </div>
 
   <script src="script.js"></script>
 </body>
